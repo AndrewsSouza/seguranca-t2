@@ -1,23 +1,10 @@
-const fileUtils = require('./src/file-utils')
-const hashUtils = require('./src/hash-utils')
-const Block = require('./src/block')
+const fileUtils = require('./src/utils/file-utils')
+const calcHashZeroFromFile = require('./src/calc-hash-from-file')
 
-const fileData = fileUtils.readFile('./test-files/FuncoesResumo - SHA1.mp4')
-// const fileData = fileUtils.readFile('./test-files/FuncoesResumo - Hash Functions.mp4')
+const fileData = fileUtils
+    .readFile('./test-files/FuncoesResumo - SHA1.mp4')
+// .readFile('./test-files/FuncoesResumo - Hash Functions.mp4')
 
-const blocks = fileUtils.fileToByteBlockArray(fileData)
-    .map(block => new Block(block, ''))
-
-let h0
-
-for (let i = blocks.length - 1; i >= 0; i--) {
-    if (i == 0) {
-        h0 = hashUtils.hashFunction(blocks[i].block, blocks[i].appendedHash)
-    } else {
-        const hash = hashUtils.hashFunction(blocks[i].block, blocks[i].appendedHash)
-
-        blocks[i - 1].appendedHash = hash
-    }
-}
+const h0 = calcHashZeroFromFile(fileData)
 
 console.log("h0: ", h0)
