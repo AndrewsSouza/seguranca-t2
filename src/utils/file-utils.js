@@ -16,12 +16,7 @@ function readFile(path) {
     return fs.readFileSync(path)
 }
 
-function writefile(path, data) {
-    return fs.writeFileSync(path, data)
-}
-
 module.exports = {
     fileToByteBlockArray,
     readFile,
-    writefile,
 }
